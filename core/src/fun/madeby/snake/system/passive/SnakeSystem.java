@@ -8,6 +8,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.utils.Logger;
 
 import fun.madeby.snake.component.SnakeComponent;
+import fun.madeby.util.Mappers;
 
 
 /**
@@ -31,6 +32,7 @@ public class SnakeSystem extends EntitySystem implements EntityListener {
 
     }
 
+    // Best practice to remove listeners
     @Override
     public void removedFromEngine(Engine engine) {
         LOG.debug("SnakeSystem removed from engine.");
@@ -44,11 +46,22 @@ public class SnakeSystem extends EntitySystem implements EntityListener {
 
     @Override
     public void entityAdded(Entity entity) {
+        LOG.debug("entityAdded entity = " + entity);
 
     }
 
     @Override
     public void entityRemoved(Entity entity) {
+        LOG.debug("entityRemoved entity = " + entity.getClass().getSimpleName());
+
+        Engine engine = super.getEngine();
+        // Remove Head
+        SnakeComponent snakeComponent = Mappers.SNAKE_COMPONENT_MAPPER.get(entity);
+        engine.removeEntity(snakeComponent.head);
+
+        for (Entity bodyPart: snakeComponent.bodyParts) {
+            engine.removeEntity(bodyPart);
+        }
 
     }
 }

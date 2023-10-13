@@ -19,6 +19,7 @@ import fun.madeby.snake.config.GameConfig;
 import fun.madeby.snake.system.debug.DebugCameraSystem;
 import fun.madeby.snake.system.debug.DebugRenderSystem;
 import fun.madeby.snake.system.debug.GridRenderSystem;
+import fun.madeby.snake.system.passive.SnakeSystem;
 import fun.madeby.util.GdxUtils;
 
 public class GameScreen extends ScreenAdapter {
@@ -63,6 +64,7 @@ LOG.debug("entity count after adding snake " + engine.getEntities().size());
             engine.addSystem(new DebugCameraSystem(GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y, camera));
         }
         engine.addSystem(new DebugRenderSystem(viewport, renderer));
+        engine.addSystem(new SnakeSystem());
     }
 
     @Override
