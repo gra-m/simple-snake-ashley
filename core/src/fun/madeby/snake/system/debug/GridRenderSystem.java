@@ -1,4 +1,4 @@
-package fun.madeby.snake.system;
+package fun.madeby.snake.system.debug;
 
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;

@@ -48,15 +48,8 @@ public class DebugCameraController {
         setPosition(x, y);
     }
 
-    /**
-     * Applies internal position and zoom to specified camera.
-     * Call this method after handling debug input.
-     *
-     * @param camera The camera instance.
-     * @throws IllegalArgumentException if camera param is null.
-     * @see #handleDebugInput(float)
-     */
-    public void applyTo(OrthographicCamera camera) {
+
+    public void applyInternalPositionAndZoomToThisCamera(OrthographicCamera camera) {
         if (camera == null) {
             throw new IllegalArgumentException("camera cannot be null.");
         }

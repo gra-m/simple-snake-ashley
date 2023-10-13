@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import fun.madeby.SimpleSnakeGame;
 import fun.madeby.snake.config.GameConfig;
-import fun.madeby.snake.system.GridRenderSystem;
+import fun.madeby.snake.system.debug.GridRenderSystem;
 import fun.madeby.util.GdxUtils;
 
 public class GameScreen extends ScreenAdapter {

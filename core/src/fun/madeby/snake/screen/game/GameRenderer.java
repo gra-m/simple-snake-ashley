@@ -88,7 +88,7 @@ public class GameRenderer implements Disposable {
 
     public void render(float delta) {
         debugCameraController.handleDebugInput(delta);
-        debugCameraController.applyTo(gameCamera);
+        debugCameraController.applyInternalPositionAndZoomToThisCamera(gameCamera);
 
         GdxUtils.clearScreen();
 
