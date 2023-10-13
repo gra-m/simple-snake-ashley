@@ -48,8 +48,7 @@ public class GameScreen extends ScreenAdapter {
         factory = new EntityFactory(engine);
         addAllRequireSystemsToEngine();
 LOG.debug("entity count before adding head " + engine.getEntities().size());
-        factory.createSnakeHead();
-
+        factory.createSnake();
 LOG.debug("entity count after adding head " + engine.getEntities().size());
     }
 
