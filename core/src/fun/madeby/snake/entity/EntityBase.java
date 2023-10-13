@@ -1,7 +1,7 @@
 package fun.madeby.snake.entity;
 
 import com.badlogic.gdx.math.Rectangle;
-
+@Deprecated
 /**
  * Common behaviour all will have position, size and bounding box for collision detection
  */

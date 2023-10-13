@@ -1,4 +1,4 @@
-package fun.madeby.snake.entity;
+package fun.madeby.snake.common;
 
 public enum Direction {
     UP,

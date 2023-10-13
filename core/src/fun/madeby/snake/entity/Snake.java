@@ -2,8 +2,10 @@ package fun.madeby.snake.entity;
 
 import com.badlogic.gdx.utils.Array;
 
+import fun.madeby.snake.common.Direction;
 import fun.madeby.snake.config.GameConfig;
 
+@Deprecated
 /**
  * Represents whole body of the snake
  */

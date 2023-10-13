@@ -2,7 +2,6 @@ package fun.madeby.snake.screen.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -12,10 +11,11 @@ import fun.madeby.snake.common.GameManager;
 import fun.madeby.snake.config.GameConfig;
 import fun.madeby.snake.entity.BodyPart;
 import fun.madeby.snake.entity.Coin;
-import fun.madeby.snake.entity.Direction;
+import fun.madeby.snake.common.Direction;
 import fun.madeby.snake.entity.Snake;
 import fun.madeby.snake.entity.SnakeHead;
 
+@Deprecated
 public class GameController {
 
     private static final Logger LOG = new Logger(GameController.class.getName(), Logger.DEBUG);

@@ -7,7 +7,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Logger;
 
-import fun.madeby.snake.screen.game.GameScreen;
 import fun.madeby.snake.screen.loading.LoadingScreen;
 
 // As opposed to ApplicationAdapter Game can have multiple screens

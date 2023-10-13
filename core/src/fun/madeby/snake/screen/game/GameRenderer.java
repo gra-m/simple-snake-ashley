@@ -33,6 +33,7 @@ import fun.madeby.util.debug.DebugCameraController;
 /**
  * A class for everything related to rendering in the game so all textures etc
  */
+@Deprecated
 public class GameRenderer implements Disposable {
     private static final Logger LOG = new Logger(GameRenderer.class.getName(), Logger.DEBUG);
     private boolean chooseDebuggingHere = false;

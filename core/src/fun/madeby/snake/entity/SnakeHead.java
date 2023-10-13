@@ -2,8 +2,8 @@ package fun.madeby.snake.entity;
 
 import fun.madeby.snake.config.GameConfig;
 
+@Deprecated
 public class SnakeHead extends EntityBase{
-
 
     public SnakeHead(){
         super.setSize(GameConfig.SNAKE_SIZE, GameConfig.SNAKE_SIZE);
