@@ -3,12 +3,14 @@ package fun.madeby.snake.screen.game;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import fun.madeby.SimpleSnakeGame;
 import fun.madeby.snake.config.GameConfig;
+import fun.madeby.snake.system.debug.DebugCameraSystem;
 import fun.madeby.snake.system.debug.GridRenderSystem;
 import fun.madeby.util.GdxUtils;
 
@@ -16,6 +18,7 @@ public class GameScreen extends ScreenAdapter {
     private final SimpleSnakeGame game;
     private final AssetManager assetManager;
     private boolean debugMode = true;
+    private OrthographicCamera camera;
 
     // fields required by DebugUtil moved up to GameScreen from GameRenderer:
     private Viewport viewport;
@@ -32,7 +35,9 @@ public class GameScreen extends ScreenAdapter {
     // Automatically called and used to init fields
     @Override
     public void show() {
-        viewport = new FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT);
+
+        camera = new OrthographicCamera();
+        viewport = new FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, camera);
         renderer = new ShapeRenderer();
         engine = new PooledEngine();
         addAllRequireSystemsToEngine();
@@ -42,6 +47,7 @@ public class GameScreen extends ScreenAdapter {
     private void addAllRequireSystemsToEngine() {
         if (debugMode) {
             engine.addSystem(new GridRenderSystem(viewport, renderer));
+            engine.addSystem(new DebugCameraSystem(GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y, camera));
         }
     }
 
@@ -59,8 +65,7 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void resize(int width, int height) {
-        // todo look, an uncentered camera!
-        viewport.update(width, height, false);
+        viewport.update(width, height, true);
 
     }
 
