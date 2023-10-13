@@ -1,6 +1,9 @@
 package fun.madeby.snake.screen.game;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -11,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import fun.madeby.SimpleSnakeGame;
 import fun.madeby.snake.common.EntityFactory;
+import fun.madeby.snake.component.SnakeComponent;
 import fun.madeby.snake.config.GameConfig;
 import fun.madeby.snake.system.debug.DebugCameraSystem;
 import fun.madeby.snake.system.debug.DebugRenderSystem;
@@ -18,10 +22,11 @@ import fun.madeby.snake.system.debug.GridRenderSystem;
 import fun.madeby.util.GdxUtils;
 
 public class GameScreen extends ScreenAdapter {
+    private boolean debugMode = true;
+    private Entity snakeForDebugging;
     private static final Logger LOG = new Logger(GameScreen.class.getName(), Logger.DEBUG);
     private final SimpleSnakeGame game;
     private final AssetManager assetManager;
-    private boolean debugMode = true;
     private OrthographicCamera camera;
 
     // fields required by DebugUtil moved up to GameScreen from GameRenderer:
@@ -48,7 +53,7 @@ public class GameScreen extends ScreenAdapter {
         factory = new EntityFactory(engine);
         addAllRequireSystemsToEngine();
 LOG.debug("entity count before adding head " + engine.getEntities().size());
-        factory.createSnake();
+        snakeForDebugging = factory.createSnake();
 LOG.debug("entity count after adding head " + engine.getEntities().size());
     }
 
@@ -63,6 +68,13 @@ LOG.debug("entity count after adding head " + engine.getEntities().size());
     @Override
     public void render(float delta) {
         GdxUtils.clearScreen();
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            LOG.debug("entity count before remove debugSnake " + engine.getEntities().size());
+            engine.removeEntity(snakeForDebugging);
+            LOG.debug("entity count after remove debugSnake " + engine.getEntities().size());
+        }
+
 
         // With OOP controller.update(delta) and renderer.render(delta) were called here though:
         engine.update(delta);
