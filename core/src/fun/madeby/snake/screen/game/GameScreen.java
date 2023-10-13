@@ -5,16 +5,19 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import fun.madeby.SimpleSnakeGame;
+import fun.madeby.snake.common.EntityFactory;
 import fun.madeby.snake.config.GameConfig;
 import fun.madeby.snake.system.debug.DebugCameraSystem;
 import fun.madeby.snake.system.debug.GridRenderSystem;
 import fun.madeby.util.GdxUtils;
 
 public class GameScreen extends ScreenAdapter {
+    private static final Logger LOG = new Logger(GameScreen.class.getName(), Logger.DEBUG);
     private final SimpleSnakeGame game;
     private final AssetManager assetManager;
     private boolean debugMode = true;
@@ -26,6 +29,7 @@ public class GameScreen extends ScreenAdapter {
 
     // One engine per game is the target:
     private PooledEngine engine;
+    private EntityFactory factory;
 
     public GameScreen(SimpleSnakeGame simpleSnakeGame) {
         this.game = simpleSnakeGame;
@@ -40,8 +44,12 @@ public class GameScreen extends ScreenAdapter {
         viewport = new FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, camera);
         renderer = new ShapeRenderer();
         engine = new PooledEngine();
+        factory = new EntityFactory(engine);
         addAllRequireSystemsToEngine();
+LOG.debug("entity count before adding head");
+        factory.createSnakeHead();
 
+LOG.debug("entity count after adding head");
     }
 
     private void addAllRequireSystemsToEngine() {
