@@ -13,6 +13,7 @@ import fun.madeby.SimpleSnakeGame;
 import fun.madeby.snake.common.EntityFactory;
 import fun.madeby.snake.config.GameConfig;
 import fun.madeby.snake.system.debug.DebugCameraSystem;
+import fun.madeby.snake.system.debug.DebugRenderSystem;
 import fun.madeby.snake.system.debug.GridRenderSystem;
 import fun.madeby.util.GdxUtils;
 
@@ -57,6 +58,7 @@ LOG.debug("entity count after adding head " + engine.getEntities().size());
             engine.addSystem(new GridRenderSystem(viewport, renderer));
             engine.addSystem(new DebugCameraSystem(GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y, camera));
         }
+        engine.addSystem(new DebugRenderSystem(viewport, renderer));
     }
 
     @Override
