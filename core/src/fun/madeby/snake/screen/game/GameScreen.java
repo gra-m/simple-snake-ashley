@@ -8,14 +8,14 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import fun.madeby.SimpleSnakeGame;
-import fun.madeby.snake.common.GameManager;
 import fun.madeby.snake.config.GameConfig;
-import fun.madeby.snake.screen.menu.MenuScreen;
+import fun.madeby.snake.system.GridRenderSystem;
 import fun.madeby.util.GdxUtils;
 
 public class GameScreen extends ScreenAdapter {
     private final SimpleSnakeGame game;
     private final AssetManager assetManager;
+    private boolean debugMode = true;
 
     // fields required by DebugUtil moved up to GameScreen from GameRenderer:
     private Viewport viewport;
@@ -35,7 +35,14 @@ public class GameScreen extends ScreenAdapter {
         viewport = new FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT);
         renderer = new ShapeRenderer();
         engine = new PooledEngine();
+        addAllRequireSystemsToEngine();
 
+    }
+
+    private void addAllRequireSystemsToEngine() {
+        if (debugMode) {
+            engine.addSystem(new GridRenderSystem(viewport, renderer));
+        }
     }
 
     @Override
