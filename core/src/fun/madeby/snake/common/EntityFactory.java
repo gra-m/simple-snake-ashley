@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.PooledEngine;
 import fun.madeby.snake.component.DimensionComponent;
 import fun.madeby.snake.component.DirectionComponent;
 import fun.madeby.snake.component.MovementComponent;
+import fun.madeby.snake.component.PlayerComponent;
 import fun.madeby.snake.component.PositionComponent;
 import fun.madeby.snake.component.RectangularBoundsComponent;
 import fun.madeby.snake.component.SnakeComponent;
@@ -40,6 +41,7 @@ public class EntityFactory {
         RectangularBoundsComponent bounds = engine.createComponent(RectangularBoundsComponent.class);
         MovementComponent movement = engine.createComponent(MovementComponent.class);
         DirectionComponent direction = engine.createComponent(DirectionComponent.class);
+        PlayerComponent player = engine.createComponent(PlayerComponent.class);
 
         // Set components
         dimension.width = GameConfig.SNAKE_SIZE;
@@ -54,6 +56,7 @@ public class EntityFactory {
         entity.add(bounds);
         entity.add(movement);
         entity.add(direction);
+        entity.add(player);
 
         engine.addEntity(entity);
 

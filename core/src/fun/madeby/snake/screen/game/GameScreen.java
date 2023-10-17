@@ -18,6 +18,7 @@ import fun.madeby.snake.config.GameConfig;
 import fun.madeby.snake.system.BoundsUpdateSystem;
 import fun.madeby.snake.system.DirectionSystem;
 import fun.madeby.snake.system.SnakeMovementSystem;
+import fun.madeby.snake.system.PlayerControlSystem;
 import fun.madeby.snake.system.debug.DebugCameraSystem;
 import fun.madeby.snake.system.debug.DebugRenderSystem;
 import fun.madeby.snake.system.debug.GridRenderSystem;
@@ -70,6 +71,7 @@ LOG.debug("entity count after adding snake " + engine.getEntities().size());
         engine.addSystem(new DirectionSystem());
         engine.addSystem(new SnakeMovementSystem());
         engine.addSystem(new BoundsUpdateSystem());
+        engine.addSystem(new PlayerControlSystem());
     }
 
     @Override
