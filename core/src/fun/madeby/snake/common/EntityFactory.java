@@ -2,8 +2,8 @@ package fun.madeby.snake.common;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
-import com.badlogic.gdx.math.MathUtils;
 
+import fun.madeby.snake.component.CoinComponent;
 import fun.madeby.snake.component.DimensionComponent;
 import fun.madeby.snake.component.DirectionComponent;
 import fun.madeby.snake.component.MovementComponent;
@@ -25,20 +25,20 @@ public class EntityFactory {
         PositionComponent position = engine.createComponent(PositionComponent.class);
         DimensionComponent dimension = engine.createComponent(DimensionComponent.class);
         RectangularBoundsComponent bounds = engine.createComponent(RectangularBoundsComponent.class);
+        CoinComponent coin = engine.createComponent(CoinComponent.class);
 
-        // Set components
-        position.x = MathUtils.random((int) (GameConfig.WORLD_WIDTH - GameConfig.COIN_SIZE));
-        position.y = MathUtils.random((int) (GameConfig.Y_CONSTRAINED - GameConfig.COIN_SIZE));
         dimension.width = GameConfig.COIN_SIZE;
         dimension.height = GameConfig.COIN_SIZE;
         bounds.rectangle.setPosition(position.x, position.y);
         bounds.rectangle.setSize(dimension.width);
+
 
         // Manufacture Entity and add components
         Entity entity = engine.createEntity();
         entity.add(position);
         entity.add(dimension);
         entity.add(bounds);
+        entity.add(coin);
 
         engine.addEntity(entity);
 

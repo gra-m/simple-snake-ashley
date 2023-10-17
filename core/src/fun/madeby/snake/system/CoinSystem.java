@@ -27,7 +27,11 @@ public class CoinSystem extends IteratingSystem {
         CoinComponent retrievedCoinComponent = Mappers.COIN_COMPONENT_MAPPER.get(entity);
         PositionComponent retrievedPositionComponent = Mappers.POSITION_COMPONENT_MAPPER.get(entity);
 
-        if(!retrievedCoinComponent.isAvailableToEat) {
+       //Quick exit
+        if(retrievedCoinComponent.isAvailableToEat)
+            return;
+
+
             float coinX = MathUtils.random((int) (GameConfig.WORLD_WIDTH - GameConfig.COIN_SIZE));
             float coinY = MathUtils.random((int) (GameConfig.Y_CONSTRAINED - GameConfig.COIN_SIZE));
             retrievedCoinComponent.isAvailableToEat = true;
@@ -39,4 +43,3 @@ public class CoinSystem extends IteratingSystem {
 
     }
 
-}
