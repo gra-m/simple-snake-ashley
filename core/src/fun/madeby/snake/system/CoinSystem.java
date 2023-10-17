@@ -14,7 +14,8 @@ import fun.madeby.util.Mappers;
 public class CoinSystem extends IteratingSystem {
 
     private static final Family FAMILY = Family.all(
-            CoinComponent.class
+            CoinComponent.class,
+            PositionComponent.class
     ).get();
 
     public CoinSystem() {
