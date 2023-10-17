@@ -10,6 +10,7 @@ import fun.madeby.snake.component.PlayerComponent;
 import fun.madeby.snake.component.PositionComponent;
 import fun.madeby.snake.component.RectangularBoundsComponent;
 import fun.madeby.snake.component.SnakeComponent;
+import fun.madeby.snake.component.WorldWrapComponent;
 import fun.madeby.snake.config.GameConfig;
 
 public class EntityFactory {
@@ -42,6 +43,7 @@ public class EntityFactory {
         MovementComponent movement = engine.createComponent(MovementComponent.class);
         DirectionComponent direction = engine.createComponent(DirectionComponent.class);
         PlayerComponent player = engine.createComponent(PlayerComponent.class);
+        WorldWrapComponent wrap = engine.createComponent(WorldWrapComponent.class);
 
         // Set components
         dimension.width = GameConfig.SNAKE_SIZE;
@@ -57,6 +59,7 @@ public class EntityFactory {
         entity.add(movement);
         entity.add(direction);
         entity.add(player);
+        entity.add(wrap);
 
         engine.addEntity(entity);
 
