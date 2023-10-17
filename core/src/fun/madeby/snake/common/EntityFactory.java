@@ -20,6 +20,27 @@ public class EntityFactory {
         this.engine = engine;
     }
 
+    public void createCoin() {
+        PositionComponent position = engine.createComponent(PositionComponent.class);
+        DimensionComponent dimension = engine.createComponent(DimensionComponent.class);
+        RectangularBoundsComponent bounds = engine.createComponent(RectangularBoundsComponent.class);
+
+        // Set components
+        dimension.width = GameConfig.COIN_SIZE;
+        dimension.height = GameConfig.COIN_SIZE;
+        bounds.rectangle.setPosition(position.x, position.y);
+        bounds.rectangle.setSize(dimension.width);
+
+        // Manufacture Entity and add components
+        Entity entity = engine.createEntity();
+        entity.add(position);
+        entity.add(dimension);
+        entity.add(bounds);
+
+        engine.addEntity(entity);
+
+    }
+
     public Entity createSnake(){
         SnakeComponent snake = engine.createComponent(SnakeComponent.class);
         snake.head = createSnakeHead();
@@ -65,4 +86,6 @@ public class EntityFactory {
 
         return entity;
     }
+
+
 }

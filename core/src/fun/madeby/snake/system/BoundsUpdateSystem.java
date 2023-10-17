@@ -34,8 +34,5 @@ public class BoundsUpdateSystem extends IteratingSystem {
                 retrievedPositionComponent.y);
 
 
-
-
-
     }
 }

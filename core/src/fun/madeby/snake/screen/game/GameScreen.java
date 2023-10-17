@@ -16,6 +16,7 @@ import fun.madeby.SimpleSnakeGame;
 import fun.madeby.snake.common.EntityFactory;
 import fun.madeby.snake.config.GameConfig;
 import fun.madeby.snake.system.BoundsUpdateSystem;
+import fun.madeby.snake.system.CoinSystem;
 import fun.madeby.snake.system.DirectionSystem;
 import fun.madeby.snake.system.SnakeMovementSystem;
 import fun.madeby.snake.system.PlayerControlSystem;
@@ -59,6 +60,7 @@ public class GameScreen extends ScreenAdapter {
         addAllRequireSystemsToEngine();
 LOG.debug("entity count before adding snake " + engine.getEntities().size());
         snakeForDebugging = factory.createSnake();
+        factory.createCoin();
 LOG.debug("entity count after adding snake " + engine.getEntities().size());
     }
 
@@ -74,6 +76,7 @@ LOG.debug("entity count after adding snake " + engine.getEntities().size());
         engine.addSystem(new BoundsUpdateSystem());
         engine.addSystem(new PlayerControlSystem());
         engine.addSystem(new WorldWrapSystem());
+        engine.addSystem(new CoinSystem());
     }
 
     @Override

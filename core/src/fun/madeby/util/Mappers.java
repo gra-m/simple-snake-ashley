@@ -1,6 +1,8 @@
 package fun.madeby.util;
 
 import com.badlogic.ashley.core.ComponentMapper;
+
+import fun.madeby.snake.component.CoinComponent;
 import fun.madeby.snake.component.DimensionComponent;
 import fun.madeby.snake.component.DirectionComponent;
 import fun.madeby.snake.component.MovementComponent;
@@ -24,6 +26,8 @@ public final class Mappers {
             ComponentMapper.getFor(MovementComponent.class);
     public static final ComponentMapper<DirectionComponent> DIRECTION_COMPONENT_MAPPER =
             ComponentMapper.getFor(DirectionComponent.class);
+    public static final ComponentMapper<CoinComponent> COIN_COMPONENT_MAPPER =
+            ComponentMapper.getFor(CoinComponent.class);
 
 
 
