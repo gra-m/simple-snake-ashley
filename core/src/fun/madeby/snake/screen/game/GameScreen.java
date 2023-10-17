@@ -78,7 +78,7 @@ LOG.debug("entity count after adding snake " + engine.getEntities().size());
         engine.addSystem(new PlayerControlSystem());
         engine.addSystem(new WorldWrapSystem());
         engine.addSystem(new CoinSystem());
-        engine.addSystem(new CollisionSystem());
+        engine.addSystem(new CollisionSystem(factory));
     }
 
     @Override
