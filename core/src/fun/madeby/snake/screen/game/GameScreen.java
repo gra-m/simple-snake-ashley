@@ -17,6 +17,7 @@ import fun.madeby.snake.common.EntityFactory;
 import fun.madeby.snake.config.GameConfig;
 import fun.madeby.snake.system.BoundsUpdateSystem;
 import fun.madeby.snake.system.CoinSystem;
+import fun.madeby.snake.system.CollisionSystem;
 import fun.madeby.snake.system.DirectionSystem;
 import fun.madeby.snake.system.SnakeMovementSystem;
 import fun.madeby.snake.system.PlayerControlSystem;
@@ -77,6 +78,7 @@ LOG.debug("entity count after adding snake " + engine.getEntities().size());
         engine.addSystem(new PlayerControlSystem());
         engine.addSystem(new WorldWrapSystem());
         engine.addSystem(new CoinSystem());
+        engine.addSystem(new CollisionSystem());
     }
 
     @Override
