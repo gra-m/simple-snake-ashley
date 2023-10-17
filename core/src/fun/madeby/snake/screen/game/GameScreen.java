@@ -14,8 +14,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import fun.madeby.SimpleSnakeGame;
 import fun.madeby.snake.common.EntityFactory;
-import fun.madeby.snake.component.SnakeComponent;
 import fun.madeby.snake.config.GameConfig;
+import fun.madeby.snake.system.DirectionSystem;
 import fun.madeby.snake.system.debug.DebugCameraSystem;
 import fun.madeby.snake.system.debug.DebugRenderSystem;
 import fun.madeby.snake.system.debug.GridRenderSystem;
@@ -65,6 +65,7 @@ LOG.debug("entity count after adding snake " + engine.getEntities().size());
         }
         engine.addSystem(new DebugRenderSystem(viewport, renderer));
         engine.addSystem(new SnakeSystem());
+        engine.addSystem(new DirectionSystem());
     }
 
     @Override
