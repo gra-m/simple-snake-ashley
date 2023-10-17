@@ -2,6 +2,7 @@ package fun.madeby.snake.common;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.gdx.math.MathUtils;
 
 import fun.madeby.snake.component.DimensionComponent;
 import fun.madeby.snake.component.DirectionComponent;
@@ -26,6 +27,8 @@ public class EntityFactory {
         RectangularBoundsComponent bounds = engine.createComponent(RectangularBoundsComponent.class);
 
         // Set components
+        position.x = MathUtils.random((int) (GameConfig.WORLD_WIDTH - GameConfig.COIN_SIZE));
+        position.y = MathUtils.random((int) (GameConfig.Y_CONSTRAINED - GameConfig.COIN_SIZE));
         dimension.width = GameConfig.COIN_SIZE;
         dimension.height = GameConfig.COIN_SIZE;
         bounds.rectangle.setPosition(position.x, position.y);
