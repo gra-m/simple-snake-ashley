@@ -6,8 +6,11 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IntervalSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.utils.Logger;
 
 import fun.madeby.snake.common.EntityFactory;
+import fun.madeby.snake.common.GameManager;
+import fun.madeby.snake.component.BodyPartComponent;
 import fun.madeby.snake.component.CoinComponent;
 import fun.madeby.snake.component.PositionComponent;
 import fun.madeby.snake.component.RectangularBoundsComponent;
@@ -20,6 +23,7 @@ import fun.madeby.util.Mappers;
  * calls updateInterval when the interval has elapsed
  */
 public class CollisionSystem extends IntervalSystem {
+    private static final Logger LOG = new Logger(CollisionSystem.class.getName(), Logger.DEBUG);
     private static final Family COIN_FAMILY = Family.all(
             CoinComponent.class
     ).get();
@@ -39,6 +43,28 @@ public class CollisionSystem extends IntervalSystem {
         ImmutableArray<Entity> AllSnakes =  engine.getEntitiesFor(SNAKE_FAMILY);
         ImmutableArray<Entity> AllCoins =  engine.getEntitiesFor(COIN_FAMILY);
 
+        // Collision between snake head and bodyparts
+        for (Entity snakeEntity: AllSnakes) {
+            SnakeComponent snake = Mappers.SNAKE_COMPONENT_MAPPER.get(snakeEntity);
+
+            if (snake.hasBodyParts()) {
+
+                for (Entity bodyPart : snake.bodyParts) {
+
+                    BodyPartComponent bodyPartComponent = Mappers.BODY_PART_COMPONENT_MAPPER.get(bodyPart);
+
+                    if (bodyPartComponent.justCreated) {
+                        bodyPartComponent.justCreated = false;
+                        continue;
+                    }
+                    if (overlaps(snake.head, bodyPart))
+                        GameManager.INSTANCE.setGameOver();
+                }
+            }
+        }
+
+
+        // Collision between snake head and coins
         for (Entity snakeEntity : AllSnakes) {
             for (Entity coinEntity : AllCoins) {
                 SnakeComponent snakeComponent = Mappers.SNAKE_COMPONENT_MAPPER.get(snakeEntity);

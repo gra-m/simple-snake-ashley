@@ -1,7 +1,9 @@
 package fun.madeby.util;
 
 import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogic.gdx.Preferences;
 
+import fun.madeby.snake.component.BodyPartComponent;
 import fun.madeby.snake.component.CoinComponent;
 import fun.madeby.snake.component.DimensionComponent;
 import fun.madeby.snake.component.DirectionComponent;
@@ -28,10 +30,8 @@ public final class Mappers {
             ComponentMapper.getFor(DirectionComponent.class);
     public static final ComponentMapper<CoinComponent> COIN_COMPONENT_MAPPER =
             ComponentMapper.getFor(CoinComponent.class);
-
-
-
-
+    public static final ComponentMapper<BodyPartComponent>  BODY_PART_COMPONENT_MAPPER =
+            ComponentMapper.getFor(BodyPartComponent.class);
 
 
     private Mappers(){}

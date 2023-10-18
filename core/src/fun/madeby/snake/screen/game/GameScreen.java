@@ -14,7 +14,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import fun.madeby.SimpleSnakeGame;
 import fun.madeby.snake.common.EntityFactory;
+import fun.madeby.snake.common.GameManager;
 import fun.madeby.snake.config.GameConfig;
+import fun.madeby.snake.screen.menu.MenuScreen;
 import fun.madeby.snake.system.BoundsUpdateSystem;
 import fun.madeby.snake.system.CoinSystem;
 import fun.madeby.snake.system.CollisionSystem;
@@ -94,10 +96,10 @@ LOG.debug("entity count after adding snake " + engine.getEntities().size());
 
         // With OOP controller.update(delta) and renderer.render(delta) were called here though:
         engine.update(delta);
-        //todo I did this elsewhere in original = reminder if my method is removed:
-        /*if (GameManager.INSTANCE.isGameOver()) {
+        if (GameManager.INSTANCE.isGameOver()) {
             game.setScreen(new MenuScreen(game));
-        }*/
+            GameManager.INSTANCE.reset();
+        }
     }
 
     @Override
