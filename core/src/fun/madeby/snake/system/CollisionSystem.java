@@ -16,6 +16,7 @@ import fun.madeby.snake.component.PositionComponent;
 import fun.madeby.snake.component.RectangularBoundsComponent;
 import fun.madeby.snake.component.SnakeComponent;
 import fun.madeby.snake.config.GameConfig;
+import fun.madeby.snake.screen.game.CollisionListener;
 import fun.madeby.util.Mappers;
 
 /**
@@ -31,10 +32,12 @@ public class CollisionSystem extends IntervalSystem {
             SnakeComponent.class
     ).get();
     private final EntityFactory factory;
+    private final CollisionListener listener;
 
-    public CollisionSystem(EntityFactory entityFactory) {
+    public CollisionSystem(EntityFactory entityFactory, CollisionListener listener) {
         super(GameConfig.NORMAL_MOVES_EVERY.every);
         this.factory = entityFactory;
+        this.listener = listener;
     }
 
     @Override
@@ -57,8 +60,12 @@ public class CollisionSystem extends IntervalSystem {
                         bodyPartComponent.justCreated = false;
                         continue;
                     }
-                    if (overlaps(snake.head, bodyPart))
+                    if (overlaps(snake.head, bodyPart)) {
+                        listener.lose();
+                        //Here!
+                        GameManager.INSTANCE.updateHighScore();
                         GameManager.INSTANCE.setGameOver();
+                    }
                 }
             }
         }
@@ -70,6 +77,7 @@ public class CollisionSystem extends IntervalSystem {
                 SnakeComponent snakeComponent = Mappers.SNAKE_COMPONENT_MAPPER.get(snakeEntity);
                 CoinComponent coinComponent = Mappers.COIN_COMPONENT_MAPPER.get(coinEntity);
                 if (coinComponent.isAvailableToEat && overlaps(snakeComponent.head, coinEntity)) {
+                    listener.hitCoin();
                     // coin now unavailable
                     coinComponent.isAvailableToEat = false;
                     // new body part added

@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -46,6 +47,8 @@ public class GameScreen extends ScreenAdapter {
     // fields required by DebugUtil moved up to GameScreen from GameRenderer:
     private Viewport viewport;
     private ShapeRenderer renderer;
+    private Sound coinSound;
+    private Sound loseSound;
 
     // Hud Only
     private Viewport hudViewport;
@@ -54,11 +57,25 @@ public class GameScreen extends ScreenAdapter {
     private PooledEngine engine;
     private EntityFactory factory;
     private SpriteBatch batch;
+    private CollisionListener listener;
 
     public GameScreen(SimpleSnakeGame simpleSnakeGame) {
         this.game = simpleSnakeGame;
         this.assetManager = game.getAssetManager();
         this.batch = game.getBatch();
+
+        listener = new CollisionListener() {
+            @Override
+            public void hitCoin() {
+                coinSound.play();
+            }
+
+            @Override
+            public void lose() {
+                loseSound.play();
+            }
+        };
+
     }
 
     // Automatically called and used to init fields
@@ -72,6 +89,8 @@ public class GameScreen extends ScreenAdapter {
         factory = new EntityFactory(engine, assetManager);
         hudFont = assetManager.get(AssetDescriptors.UI_FONT);
         hudViewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT);
+        coinSound = assetManager.get(AssetDescriptors.COIN_SOUND);
+        loseSound = assetManager.get(AssetDescriptors.LOSE_SOUND);
         addAllRequireSystemsToEngine();
 LOG.debug("entity count before adding snake " + engine.getEntities().size());
         snakeForDebugging = factory.createSnake();
@@ -92,7 +111,7 @@ LOG.debug("entity count after adding snake " + engine.getEntities().size());
         engine.addSystem(new PlayerControlSystem());
         engine.addSystem(new WorldWrapSystem());
         engine.addSystem(new CoinSystem());
-        engine.addSystem(new CollisionSystem(factory));
+        engine.addSystem(new CollisionSystem(factory, listener));
         engine.addSystem(new RenderSystem(batch, viewport));
         engine.addSystem(new HudRenderSystem(batch, hudViewport, hudFont));
     }

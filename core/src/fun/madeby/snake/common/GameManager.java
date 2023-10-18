@@ -22,7 +22,7 @@ public class GameManager {
 
     private GameManager(){
         prefs = Gdx.app.getPreferences( SimpleSnakeGame.class.getSimpleName() );
-        highScore = prefs.getInteger(HIGH_SCORE_KEY,  100);
+        highScore = prefs.getInteger(HIGH_SCORE_KEY,  0);
         displayHighScore = highScore;
     }
 
