@@ -12,6 +12,7 @@ import fun.madeby.snake.component.PositionComponent;
 import fun.madeby.snake.component.RectangularBoundsComponent;
 import fun.madeby.snake.component.SnakeComponent;
 import fun.madeby.snake.component.TextureComponent;
+import fun.madeby.snake.component.ZOrderComponent;
 
 /**
  * Maps for all of the components used in the game, used to retrieve and make use of their contents
@@ -35,7 +36,8 @@ public final class Mappers {
             ComponentMapper.getFor(BodyPartComponent.class);
     public static final ComponentMapper<TextureComponent> TEXTURE_COMPONENT_MAPPER =
             ComponentMapper.getFor(TextureComponent.class);
-
+    public static final ComponentMapper<ZOrderComponent> Z_ORDER_COMPONENT_MAPPER =
+            ComponentMapper.getFor(ZOrderComponent.class);
 
     private Mappers(){}
 }

@@ -2,7 +2,6 @@ package fun.madeby.snake.common;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
-import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
@@ -19,11 +18,18 @@ import fun.madeby.snake.component.RectangularBoundsComponent;
 import fun.madeby.snake.component.SnakeComponent;
 import fun.madeby.snake.component.TextureComponent;
 import fun.madeby.snake.component.WorldWrapComponent;
+import fun.madeby.snake.component.ZOrderComponent;
 import fun.madeby.snake.config.GameConfig;
 
 public class EntityFactory {
+    private static final int BACKGROUND_Z_ORDER = 0;
+    private static final  int COIN_Z_ORDER = 1;
+    private static final  int BODY_PART_Z_ORDER = 2;
+    private static final  int HEAD_Z_ORDER = 3;
+
     private final PooledEngine engine;
     private final AssetManager assetManager;
+
     private TextureAtlas gameplayAtlas;
 
     public EntityFactory(PooledEngine engine, AssetManager assetManager) {
@@ -43,6 +49,7 @@ public class EntityFactory {
         RectangularBoundsComponent bounds = engine.createComponent(RectangularBoundsComponent.class);
         BodyPartComponent body = engine.createComponent(BodyPartComponent.class);
         TextureComponent texture = engine.createComponent(TextureComponent.class);
+        ZOrderComponent zOrder = engine.createComponent(ZOrderComponent.class);
 
         // set components
         position.x = x;
@@ -52,6 +59,7 @@ public class EntityFactory {
         bounds.rectangle.setPosition(position.x, position.y);
         bounds.rectangle.setSize(dimension.width);
         texture.textureRegion = gameplayAtlas.findRegion(RegionNames.BODY);
+        zOrder.z = BODY_PART_Z_ORDER;
 
 
         // Manufacture Entity and add components
@@ -61,6 +69,7 @@ public class EntityFactory {
         entity.add(bounds);
         entity.add(body);
         entity.add(texture);
+        entity.add(zOrder);
 
         engine.addEntity(entity);
 
@@ -74,13 +83,14 @@ public class EntityFactory {
         RectangularBoundsComponent bounds = engine.createComponent(RectangularBoundsComponent.class);
         CoinComponent coin = engine.createComponent(CoinComponent.class);
         TextureComponent texture = engine.createComponent(TextureComponent.class);
+        ZOrderComponent zOrder = engine.createComponent(ZOrderComponent.class);
 
         dimension.width = GameConfig.COIN_SIZE;
         dimension.height = GameConfig.COIN_SIZE;
         bounds.rectangle.setPosition(position.x, position.y);
         bounds.rectangle.setSize(dimension.width);
         texture.textureRegion = gameplayAtlas.findRegion(RegionNames.COIN);
-
+        zOrder.z = COIN_Z_ORDER;
 
 
         // Manufacture Entity and add components
@@ -90,6 +100,7 @@ public class EntityFactory {
         entity.add(bounds);
         entity.add(coin);
         entity.add(texture);
+        entity.add(zOrder);
 
         engine.addEntity(entity);
 
@@ -120,6 +131,8 @@ public class EntityFactory {
         PlayerComponent player = engine.createComponent(PlayerComponent.class);
         WorldWrapComponent wrap = engine.createComponent(WorldWrapComponent.class);
         TextureComponent texture = engine.createComponent(TextureComponent.class);
+        ZOrderComponent zOrder = engine.createComponent(ZOrderComponent.class);
+
 
         // Set components
         dimension.width = GameConfig.SNAKE_SIZE;
@@ -127,6 +140,7 @@ public class EntityFactory {
         bounds.rectangle.setPosition(position.x, position.y);
         bounds.rectangle.setSize(dimension.width);
         texture.textureRegion = gameplayAtlas.findRegion(RegionNames.HEAD);
+        zOrder.z = HEAD_Z_ORDER;
 
         // Manufacture Entity and add components
         Entity entity = engine.createEntity();
@@ -138,6 +152,7 @@ public class EntityFactory {
         entity.add(player);
         entity.add(wrap);
         entity.add(texture);
+        entity.add(zOrder);
 
         engine.addEntity(entity);
 
