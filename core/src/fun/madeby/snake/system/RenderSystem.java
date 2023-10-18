@@ -29,7 +29,7 @@ public class RenderSystem extends IteratingSystem {
     @Override
     public void update(float deltaTime) {
         viewport.apply();
-        //batch.setProjectionMatrix(viewport.getCamera().combined);
+        batch.setProjectionMatrix(viewport.getCamera().combined);
 
         // overriding and calling update within batch process saves it being called for every entity
         batch.begin();

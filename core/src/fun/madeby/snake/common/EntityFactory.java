@@ -42,6 +42,7 @@ public class EntityFactory {
         DimensionComponent dimension = engine.createComponent(DimensionComponent.class);
         RectangularBoundsComponent bounds = engine.createComponent(RectangularBoundsComponent.class);
         BodyPartComponent body = engine.createComponent(BodyPartComponent.class);
+        TextureComponent texture = engine.createComponent(TextureComponent.class);
 
         // set components
         position.x = x;
@@ -50,6 +51,7 @@ public class EntityFactory {
         dimension.height = GameConfig.COIN_SIZE;
         bounds.rectangle.setPosition(position.x, position.y);
         bounds.rectangle.setSize(dimension.width);
+        texture.textureRegion = gameplayAtlas.findRegion(RegionNames.BODY);
 
 
         // Manufacture Entity and add components
@@ -58,6 +60,7 @@ public class EntityFactory {
         entity.add(dimension);
         entity.add(bounds);
         entity.add(body);
+        entity.add(texture);
 
         engine.addEntity(entity);
 
@@ -70,11 +73,14 @@ public class EntityFactory {
         DimensionComponent dimension = engine.createComponent(DimensionComponent.class);
         RectangularBoundsComponent bounds = engine.createComponent(RectangularBoundsComponent.class);
         CoinComponent coin = engine.createComponent(CoinComponent.class);
+        TextureComponent texture = engine.createComponent(TextureComponent.class);
 
         dimension.width = GameConfig.COIN_SIZE;
         dimension.height = GameConfig.COIN_SIZE;
         bounds.rectangle.setPosition(position.x, position.y);
         bounds.rectangle.setSize(dimension.width);
+        texture.textureRegion = gameplayAtlas.findRegion(RegionNames.COIN);
+
 
 
         // Manufacture Entity and add components
@@ -83,6 +89,7 @@ public class EntityFactory {
         entity.add(dimension);
         entity.add(bounds);
         entity.add(coin);
+        entity.add(texture);
 
         engine.addEntity(entity);
 
