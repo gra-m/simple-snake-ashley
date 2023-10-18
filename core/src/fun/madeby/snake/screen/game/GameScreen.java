@@ -21,6 +21,7 @@ import fun.madeby.snake.system.BoundsUpdateSystem;
 import fun.madeby.snake.system.CoinSystem;
 import fun.madeby.snake.system.CollisionSystem;
 import fun.madeby.snake.system.DirectionSystem;
+import fun.madeby.snake.system.RenderSystem;
 import fun.madeby.snake.system.SnakeMovementSystem;
 import fun.madeby.snake.system.PlayerControlSystem;
 import fun.madeby.snake.system.WorldWrapSystem;
@@ -59,7 +60,7 @@ public class GameScreen extends ScreenAdapter {
         viewport = new FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, camera);
         renderer = new ShapeRenderer();
         engine = new PooledEngine();
-        factory = new EntityFactory(engine);
+        factory = new EntityFactory(engine, assetManager);
         addAllRequireSystemsToEngine();
 LOG.debug("entity count before adding snake " + engine.getEntities().size());
         snakeForDebugging = factory.createSnake();
@@ -81,6 +82,7 @@ LOG.debug("entity count after adding snake " + engine.getEntities().size());
         engine.addSystem(new WorldWrapSystem());
         engine.addSystem(new CoinSystem());
         engine.addSystem(new CollisionSystem(factory));
+        engine.addSystem(new RenderSystem(game.getBatch(), viewport));
     }
 
     @Override
