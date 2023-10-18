@@ -7,12 +7,15 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import fun.madeby.SimpleSnakeGame;
+import fun.madeby.snake.assets.AssetDescriptors;
 import fun.madeby.snake.common.EntityFactory;
 import fun.madeby.snake.common.GameManager;
 import fun.madeby.snake.config.GameConfig;
@@ -21,6 +24,7 @@ import fun.madeby.snake.system.BoundsUpdateSystem;
 import fun.madeby.snake.system.CoinSystem;
 import fun.madeby.snake.system.CollisionSystem;
 import fun.madeby.snake.system.DirectionSystem;
+import fun.madeby.snake.system.HudRenderSystem;
 import fun.madeby.snake.system.RenderSystem;
 import fun.madeby.snake.system.SnakeMovementSystem;
 import fun.madeby.snake.system.PlayerControlSystem;
@@ -43,13 +47,18 @@ public class GameScreen extends ScreenAdapter {
     private Viewport viewport;
     private ShapeRenderer renderer;
 
+    // Hud Only
+    private Viewport hudViewport;
+    private BitmapFont hudFont;
     // One engine per game is the target:
     private PooledEngine engine;
     private EntityFactory factory;
+    private SpriteBatch batch;
 
     public GameScreen(SimpleSnakeGame simpleSnakeGame) {
         this.game = simpleSnakeGame;
         this.assetManager = game.getAssetManager();
+        this.batch = game.getBatch();
     }
 
     // Automatically called and used to init fields
@@ -61,6 +70,8 @@ public class GameScreen extends ScreenAdapter {
         renderer = new ShapeRenderer();
         engine = new PooledEngine();
         factory = new EntityFactory(engine, assetManager);
+        hudFont = assetManager.get(AssetDescriptors.UI_FONT);
+        hudViewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT);
         addAllRequireSystemsToEngine();
 LOG.debug("entity count before adding snake " + engine.getEntities().size());
         snakeForDebugging = factory.createSnake();
@@ -82,7 +93,8 @@ LOG.debug("entity count after adding snake " + engine.getEntities().size());
         engine.addSystem(new WorldWrapSystem());
         engine.addSystem(new CoinSystem());
         engine.addSystem(new CollisionSystem(factory));
-        engine.addSystem(new RenderSystem(game.getBatch(), viewport));
+        engine.addSystem(new RenderSystem(batch, viewport));
+        engine.addSystem(new HudRenderSystem(batch, hudViewport, hudFont));
     }
 
     @Override
@@ -107,7 +119,7 @@ LOG.debug("entity count after adding snake " + engine.getEntities().size());
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
-
+        hudViewport.update(width, height, true);
     }
 
     @Override

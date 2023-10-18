@@ -44,7 +44,7 @@ public class GameController {
 
                 checkOutOfBounds();
                 checkCollision();
-                GameManager.INSTANCE.update(delta);
+                GameManager.INSTANCE.updateDisplayScore(delta);
 
             }
             spawnCoin();

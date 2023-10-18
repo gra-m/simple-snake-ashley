@@ -76,6 +76,7 @@ public class CollisionSystem extends IntervalSystem {
                     PositionComponent position = Mappers.POSITION_COMPONENT_MAPPER.get(snakeComponent.head);
                     Entity newBodyPart = factory.createBodyPart(position.x, position.y);
                     snakeComponent.bodyParts.insert(0, newBodyPart);
+                    GameManager.INSTANCE.incrementScore(GameConfig.VOTES_SHOULD_ONLY_BE_INTEGERS);
 
                 }
             }
