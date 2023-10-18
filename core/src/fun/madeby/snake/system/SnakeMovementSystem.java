@@ -21,6 +21,8 @@ public class SnakeMovementSystem extends IntervalIteratingSystem {
     private static final Family FAMILY = Family.all(
             SnakeComponent.class
     ).get();
+    private float headXBeforeMove;
+    private float headYBeforeMove;
 
     public SnakeMovementSystem() {
         super(FAMILY, GameConfig.NORMAL_MOVES_EVERY.every);
@@ -30,17 +32,33 @@ public class SnakeMovementSystem extends IntervalIteratingSystem {
     @Override
     protected void processEntity(Entity entity) {
         SnakeComponent retrievedSnakeComponent = Mappers.SNAKE_COMPONENT_MAPPER.get(entity);
-        moveHead(retrievedSnakeComponent.head);
+        PositionComponent retrievedPositionComponent = Mappers.POSITION_COMPONENT_MAPPER.get(retrievedSnakeComponent.head);
+        MovementComponent retrievedMovementComponent = Mappers.MOVEMENT_COMPONENT_MAPPER.get(retrievedSnakeComponent.head);
+
+        headXBeforeMove = retrievedPositionComponent.x;
+        headYBeforeMove = retrievedPositionComponent.y;
+
+        moveHead(retrievedMovementComponent, retrievedPositionComponent);
+        moveBodyParts(retrievedSnakeComponent);
 
 
     }
 
-    private void moveHead(Entity head) {
-        MovementComponent retrievedMovementComponent = Mappers.MOVEMENT_COMPONENT_MAPPER.get(head);
-        PositionComponent retrievedPositionComponent = Mappers.POSITION_COMPONENT_MAPPER.get(head);
+    private void moveHead(MovementComponent headRetrievedMovement , PositionComponent headPositionBeforeMove) {
 
-        retrievedPositionComponent.x += retrievedMovementComponent.xSpeed;
-        retrievedPositionComponent.y += retrievedMovementComponent.ySpeed;
+        headPositionBeforeMove.x += headRetrievedMovement.xSpeed;
+        headPositionBeforeMove.y += headRetrievedMovement.ySpeed;
 
+
+    }
+
+    private void moveBodyParts(SnakeComponent snake) {
+        if (snake.hasBodyParts()) {
+           Entity leadOfTail = snake.bodyParts.removeIndex(0);
+           PositionComponent leadsPosition = Mappers.POSITION_COMPONENT_MAPPER.get(leadOfTail);
+           leadsPosition.x = headXBeforeMove;
+           leadsPosition.y = headYBeforeMove;
+           snake.bodyParts.add(leadOfTail);
+        }
     }
 }

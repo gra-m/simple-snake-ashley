@@ -21,4 +21,8 @@ public class SnakeComponent implements Component, Pool.Poolable {
         LOG.debug("Reset done");
 
     }
+
+    public boolean hasBodyParts() {
+        return bodyParts.size > 0;
+    }
 }
