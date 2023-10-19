@@ -5,25 +5,14 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.assets.AssetManager;
 
 public class AssetManagerSystem extends EntitySystem {
-    private AssetManagerProviderSystem assetManagerProviderSystem;
     private AssetManager assetManager;
 
-    public AssetManagerSystem() {
-        addedToEngine(getEngine());
+    public AssetManagerSystem(AssetManager spawningAssetManagerProviderSystemsAssetManager) {
+        this.assetManager = spawningAssetManagerProviderSystemsAssetManager;
     }
+    public AssetManagerSystem(){}
 
-    @Override
-    public void addedToEngine(Engine engine) {
-        this.assetManagerProviderSystem = engine.getSystem(AssetManagerProviderSystem.class);
-        init();
-    }
 
-    private void init() {
-        if (this.assetManagerProviderSystem != null)
-                this.assetManager = assetManagerProviderSystem.getAssetManager();
-        else throw new RuntimeException("assetManagerProviderSystemIsNull");
-
-    }
 
     protected AssetManager getAssetManager() {
         if (this.assetManager != null)

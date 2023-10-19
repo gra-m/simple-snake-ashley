@@ -99,8 +99,7 @@ public class GameScreen extends ScreenAdapter {
             engine.addSystem(new DebugRenderSystem(viewport, renderer));
             engine.addSystem(new DebugInputSystem());
         }
-        engine.addSystem(new AssetManagerProviderSystem(assetManager));
-        engine.addSystem(new AssetManagerSystem());
+        engine.addSystem(new AssetManagerProviderSystem(assetManager, engine));
         engine.addSystem(new SoundSystem());
         engine.addSystem(new SnakeSystem());
         engine.addSystem(new DirectionSystem());

@@ -1,6 +1,7 @@
 package fun.madeby.snake.system.passive;
 
 import com.badlogic.ashley.core.EntitySystem;
+import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.assets.AssetManager;
 
 /**
@@ -9,11 +10,15 @@ import com.badlogic.gdx.assets.AssetManager;
  * constructor parameters anywhere in the AssetManagerHolderSuperSystem.
  */
 public class AssetManagerProviderSystem extends EntitySystem {
-    private final AssetManager assetManager;
+    private AssetManager assetManager;
 
-    public AssetManagerProviderSystem(AssetManager assetManager){
+    public AssetManagerProviderSystem(AssetManager assetManager, PooledEngine engine){
         this.assetManager = assetManager;
+        if (this.assetManager != null)
+            engine.addSystem(new AssetManagerSystem(this.assetManager));
+        else throw new RuntimeException("AssetManagerProviderSystem asset manager is null");
     }
+
 
     @Override
     public void update(float deltaTime) {
