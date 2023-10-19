@@ -1,6 +1,7 @@
-package fun.madeby.snake.common;
+package fun.madeby.snake.system;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -22,7 +23,7 @@ import fun.madeby.snake.component.WorldWrapComponent;
 import fun.madeby.snake.component.ZOrderComponent;
 import fun.madeby.snake.config.GameConfig;
 
-public class EntityFactory {
+public class EntityFactorySystem extends EntitySystem {
     private static final int BACKGROUND_Z_ORDER = 0;
     private static final  int COIN_Z_ORDER = 1;
     private static final  int BODY_PART_Z_ORDER = 2;
@@ -33,7 +34,7 @@ public class EntityFactory {
 
     private TextureAtlas gameplayAtlas;
 
-    public EntityFactory(PooledEngine engine, AssetManager assetManager) {
+    public EntityFactorySystem(PooledEngine engine, AssetManager assetManager) {
         this.engine = engine;
         this.assetManager = assetManager;
         init();

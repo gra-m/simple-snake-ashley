@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import fun.madeby.SimpleSnakeGame;
 import fun.madeby.snake.assets.AssetDescriptors;
-import fun.madeby.snake.common.EntityFactory;
+import fun.madeby.snake.system.EntityFactorySystem;
 import fun.madeby.snake.common.GameManager;
 import fun.madeby.snake.config.GameConfig;
 import fun.madeby.snake.screen.menu.MenuScreen;
@@ -57,7 +57,7 @@ public class GameScreen extends ScreenAdapter {
     private BitmapFont hudFont;
     // One engine per game is the target:
     private PooledEngine engine;
-    private EntityFactory factory;
+    private EntityFactorySystem entityFactorySystem;
     private SpriteBatch batch;
     private CollisionListener listener;
 
@@ -88,7 +88,6 @@ public class GameScreen extends ScreenAdapter {
         viewport = new FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, camera);
         renderer = new ShapeRenderer();
         engine = new PooledEngine();
-        factory = new EntityFactory(engine, assetManager);
         hudFont = assetManager.get(AssetDescriptors.UI_FONT);
         hudViewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT);
         coinSound = assetManager.get(AssetDescriptors.COIN_SOUND);
@@ -96,9 +95,12 @@ public class GameScreen extends ScreenAdapter {
 
         addAllRequireSystemsToEngine();
 
-        snake = factory.createSnake();
-        factory.createCoin();
-        factory.createBackground();
+        // retrieving added system here in same way as it can be retrieved from engine anywhere it is needed
+        entityFactorySystem = engine.getSystem(EntityFactorySystem.class);
+
+        snake = entityFactorySystem.createSnake();
+        entityFactorySystem.createCoin();
+        entityFactorySystem.createBackground();
     }
 
     private void addAllRequireSystemsToEngine() {
@@ -115,7 +117,8 @@ public class GameScreen extends ScreenAdapter {
         engine.addSystem(new PlayerControlSystem());
         engine.addSystem(new WorldWrapSystem());
         engine.addSystem(new CoinSystem());
-        engine.addSystem(new CollisionSystem(factory, listener));
+        engine.addSystem(new EntityFactorySystem(engine, assetManager));
+        engine.addSystem(new CollisionSystem(listener));
         engine.addSystem(new RenderSystem(batch, viewport));
         engine.addSystem(new HudRenderSystem(batch, hudViewport, hudFont));
     }

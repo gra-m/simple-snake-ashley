@@ -2,13 +2,13 @@ package fun.madeby.snake.system;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IntervalSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.utils.Logger;
 
-import fun.madeby.snake.common.EntityFactory;
 import fun.madeby.snake.common.GameManager;
 import fun.madeby.snake.component.BodyPartComponent;
 import fun.madeby.snake.component.CoinComponent;
@@ -31,13 +31,18 @@ public class CollisionSystem extends IntervalSystem {
     private static final Family SNAKE_FAMILY = Family.all(
             SnakeComponent.class
     ).get();
-    private final EntityFactory factory;
+    private EntityFactorySystem entityFactorySystem;
+
     private final CollisionListener listener;
 
-    public CollisionSystem(EntityFactory entityFactory, CollisionListener listener) {
+    public CollisionSystem(CollisionListener listener) {
         super(GameConfig.NORMAL_MOVES_EVERY.every);
-        this.factory = entityFactory;
         this.listener = listener;
+    }
+
+    @Override
+    public void addedToEngine(Engine engine) {
+       entityFactorySystem =  engine.getSystem(EntityFactorySystem.class);
     }
 
     @Override
@@ -82,7 +87,7 @@ public class CollisionSystem extends IntervalSystem {
                     coinComponent.isAvailableToEat = false;
                     // new body part added
                     PositionComponent position = Mappers.POSITION_COMPONENT_MAPPER.get(snakeComponent.head);
-                    Entity newBodyPart = factory.createBodyPart(position.x, position.y);
+                    Entity newBodyPart = entityFactorySystem.createBodyPart(position.x, position.y);
                     snakeComponent.bodyParts.insert(0, newBodyPart);
                     GameManager.INSTANCE.incrementScore(GameConfig.VOTES_SHOULD_ONLY_BE_INTEGERS);
 
