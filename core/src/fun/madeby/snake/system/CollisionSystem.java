@@ -15,7 +15,7 @@ import fun.madeby.snake.component.PositionComponent;
 import fun.madeby.snake.component.RectangularBoundsComponent;
 import fun.madeby.snake.component.SnakeComponent;
 import fun.madeby.snake.config.GameConfig;
-import fun.madeby.snake.screen.game.CollisionListener;
+import fun.madeby.snake.system.passive.SoundSystem;
 import fun.madeby.snake.system.passive.EntityFactorySystem;
 import fun.madeby.util.Mappers;
 
@@ -32,17 +32,17 @@ public class CollisionSystem extends IntervalSystem {
             SnakeComponent.class
     ).get();
     private EntityFactorySystem entityFactorySystem;
+    private SoundSystem soundSystem;
 
-    private final CollisionListener listener;
 
-    public CollisionSystem(CollisionListener listener) {
+    public CollisionSystem() {
         super(GameConfig.NORMAL_MOVES_EVERY.every);
-        this.listener = listener;
     }
 
     @Override
     public void addedToEngine(Engine engine) {
        entityFactorySystem =  engine.getSystem(EntityFactorySystem.class);
+       soundSystem = engine.getSystem(SoundSystem.class);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class CollisionSystem extends IntervalSystem {
                         continue;
                     }
                     if (overlaps(snake.head, bodyPart)) {
-                        listener.lose();
+                        soundSystem.lose();
                         //Here!
                         GameManager.INSTANCE.updateHighScore();
                         GameManager.INSTANCE.setGameOver();
@@ -82,7 +82,7 @@ public class CollisionSystem extends IntervalSystem {
                 SnakeComponent snakeComponent = Mappers.SNAKE_COMPONENT_MAPPER.get(snakeEntity);
                 CoinComponent coinComponent = Mappers.COIN_COMPONENT_MAPPER.get(coinEntity);
                 if (coinComponent.isAvailableToEat && overlaps(snakeComponent.head, coinEntity)) {
-                    listener.hitCoin();
+                    soundSystem.hitCoin();
                     // coin now unavailable
                     coinComponent.isAvailableToEat = false;
                     // new body part added
