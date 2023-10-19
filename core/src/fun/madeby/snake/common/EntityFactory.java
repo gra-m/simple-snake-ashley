@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import fun.madeby.snake.assets.AssetDescriptors;
 import fun.madeby.snake.assets.RegionNames;
@@ -43,6 +44,31 @@ public class EntityFactory {
     }
 
     public void createBackground() {
+        // obtain entiity, its components and their requirements
+        Entity background = engine.createEntity();
+
+        PositionComponent position = engine.createComponent(PositionComponent.class);
+        DimensionComponent dimension = engine.createComponent(DimensionComponent.class);
+        ZOrderComponent zOrder = engine.createComponent(ZOrderComponent.class);
+        TextureComponent texture = engine.createComponent(TextureComponent.class);
+
+        TextureRegion bg = gameplayAtlas.findRegion(RegionNames.BACKGROUND);
+
+        // set them
+        position.x = 0;
+        position.y = 0;
+        dimension.width = GameConfig.WORLD_WIDTH;
+        dimension.height = GameConfig.WORLD_HEIGHT;
+        zOrder.z = BACKGROUND_Z_ORDER;
+        texture.textureRegion = bg;
+
+        // add them
+        background.add(position);
+        background.add(dimension);
+        background.add(zOrder);
+        background.add(texture);
+
+        engine.addEntity(background);
 
     }
 

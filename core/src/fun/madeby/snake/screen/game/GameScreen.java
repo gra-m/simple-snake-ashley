@@ -96,6 +96,7 @@ public class GameScreen extends ScreenAdapter {
 
         snake = factory.createSnake();
         factory.createCoin();
+        factory.createBackground();
     }
 
     private void addAllRequireSystemsToEngine() {
