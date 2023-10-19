@@ -17,6 +17,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import fun.madeby.SimpleSnakeGame;
 import fun.madeby.snake.assets.AssetDescriptors;
+import fun.madeby.snake.system.passive.AssetManagerProviderSystem;
+import fun.madeby.snake.system.passive.AssetManagerSystem;
 import fun.madeby.snake.system.passive.SoundSystem;
 import fun.madeby.snake.system.passive.Sounds;
 import fun.madeby.snake.system.passive.EntityFactorySystem;
@@ -79,8 +81,6 @@ public class GameScreen extends ScreenAdapter {
         engine = new PooledEngine();
         hudFont = assetManager.get(AssetDescriptors.UI_FONT);
         hudViewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT);
-        coinSound = assetManager.get(AssetDescriptors.COIN_SOUND);
-        loseSound = assetManager.get(AssetDescriptors.LOSE_SOUND);
 
         addAllRequireSystemsToEngine();
 
@@ -99,6 +99,9 @@ public class GameScreen extends ScreenAdapter {
             engine.addSystem(new DebugRenderSystem(viewport, renderer));
             engine.addSystem(new DebugInputSystem());
         }
+        engine.addSystem(new AssetManagerProviderSystem(assetManager));
+        engine.addSystem(new AssetManagerSystem());
+        engine.addSystem(new SoundSystem());
         engine.addSystem(new SnakeSystem());
         engine.addSystem(new DirectionSystem());
         engine.addSystem(new SnakeMovementSystem());
@@ -107,7 +110,6 @@ public class GameScreen extends ScreenAdapter {
         engine.addSystem(new WorldWrapSystem());
         engine.addSystem(new CoinSystem());
         engine.addSystem(new EntityFactorySystem(assetManager));
-        engine.addSystem(new SoundSystem(assetManager));
         engine.addSystem(new CollisionSystem());
         engine.addSystem(new RenderSystem(batch, viewport));
         engine.addSystem(new HudRenderSystem(batch, hudViewport, hudFont));
