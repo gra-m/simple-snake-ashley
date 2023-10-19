@@ -10,13 +10,15 @@ import fun.madeby.snake.common.ZOrderComparator;
 import fun.madeby.snake.component.DimensionComponent;
 import fun.madeby.snake.component.PositionComponent;
 import fun.madeby.snake.component.TextureComponent;
+import fun.madeby.snake.component.ZOrderComponent;
 import fun.madeby.util.Mappers;
 
 public class RenderSystem extends SortedIteratingSystem {
     private static final Family FAMILY = Family.all(
             TextureComponent.class,
             PositionComponent.class,
-            DimensionComponent.class
+            DimensionComponent.class,
+            ZOrderComponent.class
     ).get();
 
 

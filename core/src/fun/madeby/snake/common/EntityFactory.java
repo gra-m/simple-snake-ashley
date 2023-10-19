@@ -42,6 +42,10 @@ public class EntityFactory {
         gameplayAtlas = assetManager.get(AssetDescriptors.GAMEPLAY_ATLAS);
     }
 
+    public void createBackground() {
+
+    }
+
     public Entity createBodyPart(float x, float y) {
         //create components
         PositionComponent position = engine.createComponent(PositionComponent.class);
