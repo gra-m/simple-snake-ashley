@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import fun.madeby.SimpleSnakeGame;
 import fun.madeby.snake.assets.AssetDescriptors;
-import fun.madeby.snake.system.EntityFactorySystem;
+import fun.madeby.snake.system.passive.EntityFactorySystem;
 import fun.madeby.snake.common.GameManager;
 import fun.madeby.snake.config.GameConfig;
 import fun.madeby.snake.screen.menu.MenuScreen;

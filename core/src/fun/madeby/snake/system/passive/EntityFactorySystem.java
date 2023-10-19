@@ -1,4 +1,4 @@
-package fun.madeby.snake.system;
+package fun.madeby.snake.system.passive;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
@@ -40,12 +40,22 @@ public class EntityFactorySystem extends EntitySystem {
         init();
     }
 
+    @Override
+    public void update(float deltaTime) {
+       //This is a passive system
+    }
+    @Override
+    public boolean checkProcessing() {
+        // Non-processing passive system
+        return false;
+    }
+
     private void init() {
         gameplayAtlas = assetManager.get(AssetDescriptors.GAMEPLAY_ATLAS);
     }
 
     public void createBackground() {
-        // obtain entiity, its components and their requirements
+        // obtain entity, its components and their requirements
         Entity background = engine.createEntity();
 
         PositionComponent position = engine.createComponent(PositionComponent.class);

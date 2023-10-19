@@ -2,7 +2,6 @@ package fun.madeby.snake.system;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IntervalSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
@@ -17,6 +16,7 @@ import fun.madeby.snake.component.RectangularBoundsComponent;
 import fun.madeby.snake.component.SnakeComponent;
 import fun.madeby.snake.config.GameConfig;
 import fun.madeby.snake.screen.game.CollisionListener;
+import fun.madeby.snake.system.passive.EntityFactorySystem;
 import fun.madeby.util.Mappers;
 
 /**
