@@ -1,5 +1,6 @@
 package fun.madeby.snake.system.passive;
 
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.PooledEngine;
@@ -29,13 +30,12 @@ public class EntityFactorySystem extends EntitySystem {
     private static final  int BODY_PART_Z_ORDER = 2;
     private static final  int HEAD_Z_ORDER = 3;
 
-    private final PooledEngine engine;
     private final AssetManager assetManager;
 
     private TextureAtlas gameplayAtlas;
+    private PooledEngine engine;
 
-    public EntityFactorySystem(PooledEngine engine, AssetManager assetManager) {
-        this.engine = engine;
+    public EntityFactorySystem(AssetManager assetManager) {
         this.assetManager = assetManager;
         init();
     }
@@ -52,6 +52,11 @@ public class EntityFactorySystem extends EntitySystem {
 
     private void init() {
         gameplayAtlas = assetManager.get(AssetDescriptors.GAMEPLAY_ATLAS);
+    }
+
+    @Override
+    public void addedToEngine(Engine engine) {
+        this.engine = (PooledEngine) engine;
     }
 
     public void createBackground() {
