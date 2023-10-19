@@ -38,7 +38,7 @@ import fun.madeby.util.GdxUtils;
 
 public class GameScreen extends ScreenAdapter {
     private boolean debugMode = true;
-    private Entity snakeForDebugging;
+    private Entity snake;
     private static final Logger LOG = new Logger(GameScreen.class.getName(), Logger.DEBUG);
     private final SimpleSnakeGame game;
     private final AssetManager assetManager;
@@ -91,11 +91,11 @@ public class GameScreen extends ScreenAdapter {
         hudViewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT);
         coinSound = assetManager.get(AssetDescriptors.COIN_SOUND);
         loseSound = assetManager.get(AssetDescriptors.LOSE_SOUND);
+
         addAllRequireSystemsToEngine();
-LOG.debug("entity count before adding snake " + engine.getEntities().size());
-        snakeForDebugging = factory.createSnake();
+
+        snake = factory.createSnake();
         factory.createCoin();
-LOG.debug("entity count after adding snake " + engine.getEntities().size());
     }
 
     private void addAllRequireSystemsToEngine() {
@@ -120,18 +120,24 @@ LOG.debug("entity count after adding snake " + engine.getEntities().size());
     public void render(float delta) {
         GdxUtils.clearScreen();
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            LOG.debug("entity count before remove debugSnake " + engine.getEntities().size());
-            engine.removeEntity(snakeForDebugging);
-            LOG.debug("entity count after remove debugSnake " + engine.getEntities().size());
+        if (debugMode) {
+            removeSnakeEntityForDebugging();
         }
 
-
-        // With OOP controller.update(delta) and renderer.render(delta) were called here though:
+        // With OOP controller.update(delta) and renderer.render(delta) were called here engine does it all:
         engine.update(delta);
         if (GameManager.INSTANCE.isGameOver()) {
             game.setScreen(new MenuScreen(game));
             GameManager.INSTANCE.reset();
+        }
+    }
+
+    private void removeSnakeEntityForDebugging() {
+        if (debugMode && Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            LOG.debug("entity count before snake removed " + engine.getEntities().size());
+            engine.removeEntity(snake);
+            LOG.debug("entity count after snake removed " +  engine.getEntities().size() + " press again for confirmation head and all body parts removed.");
+            // todo add snake back in? More complex useful to remove objects from system?
         }
     }
 
