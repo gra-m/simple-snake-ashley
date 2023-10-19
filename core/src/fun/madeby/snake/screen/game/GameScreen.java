@@ -37,7 +37,7 @@ import fun.madeby.snake.system.passive.SnakeSystem;
 import fun.madeby.util.GdxUtils;
 
 public class GameScreen extends ScreenAdapter {
-    private boolean debugMode = true;
+    private boolean debugMode = false;
     private Entity snake;
     private static final Logger LOG = new Logger(GameScreen.class.getName(), Logger.DEBUG);
     private final SimpleSnakeGame game;
