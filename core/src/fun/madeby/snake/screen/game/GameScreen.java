@@ -18,9 +18,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import fun.madeby.SimpleSnakeGame;
 import fun.madeby.snake.assets.AssetDescriptors;
 import fun.madeby.snake.system.passive.AssetManagerProviderSystem;
-import fun.madeby.snake.system.passive.AssetManagerSystem;
 import fun.madeby.snake.system.passive.SoundSystem;
-import fun.madeby.snake.system.passive.Sounds;
 import fun.madeby.snake.system.passive.EntityFactorySystem;
 import fun.madeby.snake.common.GameManager;
 import fun.madeby.snake.config.GameConfig;
@@ -63,7 +61,6 @@ public class GameScreen extends ScreenAdapter {
     private PooledEngine engine;
     private EntityFactorySystem entityFactorySystem;
     private SpriteBatch batch;
-    private Sounds listener;
 
     public GameScreen(SimpleSnakeGame simpleSnakeGame) {
         this.game = simpleSnakeGame;
@@ -99,7 +96,7 @@ public class GameScreen extends ScreenAdapter {
             engine.addSystem(new DebugRenderSystem(viewport, renderer));
             engine.addSystem(new DebugInputSystem());
         }
-        engine.addSystem(new AssetManagerProviderSystem(assetManager, engine));
+        engine.addSystem(new AssetManagerProviderSystem(assetManager));
         engine.addSystem(new SoundSystem());
         engine.addSystem(new SnakeSystem());
         engine.addSystem(new DirectionSystem());

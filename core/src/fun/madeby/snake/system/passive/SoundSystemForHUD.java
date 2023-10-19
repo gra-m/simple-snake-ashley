@@ -2,26 +2,29 @@ package fun.madeby.snake.system.passive;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.EntitySystem;
-import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 
 import fun.madeby.snake.assets.AssetPaths;
 
 
-public class SoundSystem extends EntitySystem {
+public class SoundSystemForHUD extends EntitySystem {
     private AssetManagerProviderSystem assetManagerProviderSystem;
     private AssetManager assetManager;
 
-    private Sound lose;
-    private Sound coin;
+    private Sound separatedSounds;
+    private Sound forEGHudAndGamePlay;
+    private Sound orShortAndLong;
+    private Sound basicallyForEasierManagement;
 
-    public SoundSystem() {}
+    public SoundSystemForHUD() {}
 
 
     private void init() {
-        lose = assetManager.get(AssetPaths.LOSE_SOUND);
-        coin = assetManager.get(AssetPaths.COIN_SOUND);
+        separatedSounds = assetManager.get(AssetPaths.LOSE_SOUND);
+        forEGHudAndGamePlay = assetManager.get(AssetPaths.COIN_SOUND);
+        orShortAndLong = assetManager.get(AssetPaths.LOSE_SOUND);
+        basicallyForEasierManagement = assetManager.get(AssetPaths.LOSE_SOUND);
     }
 
     @Override
@@ -42,12 +45,9 @@ public class SoundSystem extends EntitySystem {
     }
 
 
-    public void hitCoin() {
-        coin.play();
+    public void separatedSounds() {
+        separatedSounds.play();
 
     }
 
-    public void lose() {
-        lose.play();
-    }
 }
