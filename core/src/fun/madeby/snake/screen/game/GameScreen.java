@@ -24,6 +24,7 @@ import fun.madeby.snake.screen.menu.MenuScreen;
 import fun.madeby.snake.system.BoundsUpdateSystem;
 import fun.madeby.snake.system.CoinSystem;
 import fun.madeby.snake.system.CollisionSystem;
+import fun.madeby.snake.system.DebugInputSystem;
 import fun.madeby.snake.system.DirectionSystem;
 import fun.madeby.snake.system.HudRenderSystem;
 import fun.madeby.snake.system.RenderSystem;
@@ -37,7 +38,8 @@ import fun.madeby.snake.system.passive.SnakeSystem;
 import fun.madeby.util.GdxUtils;
 
 public class GameScreen extends ScreenAdapter {
-    private boolean debugMode = false;
+    // If you want to turn this off
+    private boolean debugMode = true;
     private Entity snake;
     private static final Logger LOG = new Logger(GameScreen.class.getName(), Logger.DEBUG);
     private final SimpleSnakeGame game;
@@ -103,8 +105,9 @@ public class GameScreen extends ScreenAdapter {
         if (debugMode) {
             engine.addSystem(new GridRenderSystem(viewport, renderer));
             engine.addSystem(new DebugCameraSystem(GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y, camera));
+            engine.addSystem(new DebugRenderSystem(viewport, renderer));
+            engine.addSystem(new DebugInputSystem());
         }
-        engine.addSystem(new DebugRenderSystem(viewport, renderer));
         engine.addSystem(new SnakeSystem());
         engine.addSystem(new DirectionSystem());
         engine.addSystem(new SnakeMovementSystem());
