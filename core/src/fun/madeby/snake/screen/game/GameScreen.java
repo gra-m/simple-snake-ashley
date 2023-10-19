@@ -37,6 +37,7 @@ import fun.madeby.snake.system.debug.DebugCameraSystem;
 import fun.madeby.snake.system.debug.DebugRenderSystem;
 import fun.madeby.snake.system.debug.GridRenderSystem;
 import fun.madeby.snake.system.passive.SnakeSystem;
+import fun.madeby.snake.system.passive.StartUpSystem;
 import fun.madeby.util.GdxUtils;
 
 public class GameScreen extends ScreenAdapter {
@@ -88,8 +89,7 @@ public class GameScreen extends ScreenAdapter {
         entityFactorySystem = engine.getSystem(EntityFactorySystem.class);
 
         snake = entityFactorySystem.createSnake();
-        entityFactorySystem.createCoin();
-        entityFactorySystem.createBackground();
+
     }
 
     private void addAllRequireSystemsToEngine() {
@@ -99,6 +99,9 @@ public class GameScreen extends ScreenAdapter {
             engine.addSystem(new DebugRenderSystem(viewport, renderer));
             engine.addSystem(new DebugInputSystem());
         }
+
+        engine.addSystem(new EntityFactorySystem(assetManager));
+        engine.addSystem(new StartUpSystem());
         engine.addSystem(new SnakeSystem());
         engine.addSystem(new DirectionSystem());
         engine.addSystem(new SnakeMovementSystem());
@@ -106,7 +109,6 @@ public class GameScreen extends ScreenAdapter {
         engine.addSystem(new PlayerControlSystem());
         engine.addSystem(new WorldWrapSystem());
         engine.addSystem(new CoinSystem());
-        engine.addSystem(new EntityFactorySystem(assetManager));
         engine.addSystem(new SoundSystem(assetManager));
         engine.addSystem(new CollisionSystem());
         engine.addSystem(new RenderSystem(batch, viewport));
