@@ -8,6 +8,13 @@ import com.badlogic.gdx.audio.Sound;
 import fun.madeby.snake.assets.AssetPaths;
 
 
+/**
+ * This is an example of how different Systems requiring an AssetManager could acquire it from
+ * an an AssetManagerProviderSystem, meaning that different assets can be catalogued within different
+ * systems without initialising them with AssetManager.
+ * This was, at the time, the simplest way I could find to implement this, having played around with
+ * inheritance and getting lots of null pointers.
+ */
 public class SoundSystemForHUD extends EntitySystem {
     private AssetManagerProviderSystem assetManagerProviderSystem;
     private AssetManager assetManager;
